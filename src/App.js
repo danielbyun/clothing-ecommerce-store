@@ -1,8 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./App.css";
+import Homepage from "./Components/Homepage";
 
-function App() {
-  return <div>The fuck is good youtube</div>;
-}
+const App = () => {
+  return (
+    <Fragment>
+      <Homepage />
+    </Fragment>
+  );
+};
 
 export default App;
