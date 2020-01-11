@@ -1,9 +1,11 @@
 import React, { Fragment } from "react";
 import "./App.css";
-import Homepage from "./Pages/Homepage/Homepage";
 import { Route, Switch } from "react-router-dom";
+
+import Homepage from "./Pages/Homepage/Homepage";
 import ShopPage from "./Pages/Shop/Shop";
 import Header from "./Components/Header/Header";
+import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
 
 const App = () => {
   return (
@@ -13,7 +15,8 @@ const App = () => {
       {/* shows one of these components inside switch statement */}
       <Switch>
         <Route exact path="/" component={Homepage} />
-        <Route exact path="/shop" component={ShopPage} />
+        <Route path="/shop" component={ShopPage} />
+        <Route path="/signin" component={SignInAndSignUpPage} />
       </Switch>
     </Fragment>
   );
