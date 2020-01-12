@@ -5,31 +5,31 @@ import { ReactComponent as Logo } from "../../Assets/crown.svg";
 
 import { auth } from "../../Firebase/Firebase.utils";
 
-const Header = ({ currentUser }) => {
-  return (
-    <div className="header">
-      <Link className="logo-container" to="/">
-        <Logo className="logo" />
+import _ from "lodash";
+
+const Header = ({ currentUser }) => (
+  <div className="header">
+    <Link className="logo-container" to="/">
+      <Logo className="logo" />
+    </Link>
+    <div className="options">
+      <Link className="option" to="/shop">
+        SHOP
       </Link>
-      <div className="options">
-        <Link className="option" to="/shop">
-          SHOP
+      <Link className="option" to="/shop">
+        CONTACT
+      </Link>
+      {currentUser ? (
+        <div className="option" onClick={() => auth.signOut()}>
+          SIGN OUT
+        </div>
+      ) : (
+        <Link className="option" to="/signin">
+          SIGN IN
         </Link>
-        <Link className="option" to="/contact">
-          CONTACT
-        </Link>
-        {currentUser ? (
-          <div className="option" onClick={() => auth.signOut()}>
-            SIGN OUT
-          </div>
-        ) : (
-          <Link className="option" to="/signin">
-            SIGN IN
-          </Link>
-        )}
-      </div>
+      )}
     </div>
-  );
-};
+  </div>
+);
 
 export default Header;

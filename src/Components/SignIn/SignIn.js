@@ -1,9 +1,9 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import "./SignIn.scss";
 import FormInput from "../Form-Input/Form-Input";
 import CustomButton from "../Custom-Button/Custom-Button";
 
-import { signInWithGoogle } from "../../Firebase/Firebase.utils";
+import { auth, signInWithGoogle } from "../../Firebase/Firebase.utils";
 
 // functional component
 const SignIn = () => {
@@ -12,13 +12,20 @@ const SignIn = () => {
     password: ""
   });
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    setState({
-      email: "",
-      password: ""
-    });
+    const { email, password } = state;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      setState({
+        email: "",
+        password: ""
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleChange = e => {
