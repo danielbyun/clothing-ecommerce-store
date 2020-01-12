@@ -7,7 +7,7 @@ import ShopPage from "./Pages/Shop/Shop";
 import Header from "./Components/Header/Header";
 import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
 
-import { auth } from "./Firebase/Firebase.utils";
+import { auth, createUserProfileDocument } from "./Firebase/Firebase.utils";
 
 const App = () => {
   const [userAuth, setUserAuth] = useState({
@@ -16,8 +16,26 @@ const App = () => {
 
   useEffect(() => {
     // function inside the auth library inside firebase
-    auth.onAuthStateChanged(user => {
-      setUserAuth({ currentUser: user });
+    auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        // check if the database has updated with the new data
+        userRef.onSnapshot(snapShot => {
+          setUserAuth({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          });
+        });
+
+        console.log(userAuth);
+
+        setUserAuth({
+          currentUser: null
+        });
+      }
     });
   }, []);
 

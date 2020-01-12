@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, Component } from "react";
 import "./SignIn.scss";
 import FormInput from "../Form-Input/Form-Input";
 import CustomButton from "../Custom-Button/Custom-Button";
 
 import { signInWithGoogle } from "../../Firebase/Firebase.utils";
 
+// functional component
 const SignIn = () => {
-  const [signIn, setSignIn] = useState({
+  const [state, setState] = useState({
     email: "",
     password: ""
   });
@@ -14,7 +15,7 @@ const SignIn = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    setSignIn({
+    setState({
       email: "",
       password: ""
     });
@@ -22,7 +23,8 @@ const SignIn = () => {
 
   const handleChange = e => {
     const { value, name } = e.target;
-    setSignIn({ [name]: value });
+
+    setState({ ...state, [name]: value });
   };
 
   return (
@@ -33,19 +35,19 @@ const SignIn = () => {
       <form onSubmit={handleSubmit}>
         <FormInput
           name="email"
-          value={signIn.email}
-          required
           type="email"
           handleChange={handleChange}
+          value={state.email}
           label="email"
+          required
         />
         <FormInput
           name="password"
-          value={signIn.password}
-          handleChange={handleChange}
           type="password"
-          required
+          handleChange={handleChange}
+          value={state.password}
           label="password"
+          required
         />
         <div className="buttons">
           <CustomButton type="submit">Sign In</CustomButton>
