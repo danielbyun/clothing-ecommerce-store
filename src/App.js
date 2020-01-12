@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
@@ -7,11 +7,24 @@ import ShopPage from "./Pages/Shop/Shop";
 import Header from "./Components/Header/Header";
 import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
 
+import { auth } from "./Firebase/Firebase.utils";
+
 const App = () => {
+  const [userAuth, setUserAuth] = useState({
+    currentUser: null
+  });
+
+  useEffect(() => {
+    // function inside the auth library inside firebase
+    auth.onAuthStateChanged(user => {
+      setUserAuth({ currentUser: user });
+    });
+  }, []);
+
   return (
     <Fragment>
       {/* shows no matter what */}
-      <Header />
+      <Header currentUser={userAuth} />
       {/* shows one of these components inside switch statement */}
       <Switch>
         <Route exact path="/" component={Homepage} />
