@@ -1,7 +1,7 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import Homepage from "./Pages/Homepage/Homepage";
 import ShopPage from "./Pages/Shop/Shop";
@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/actions/userActions";
 
 const App = props => {
-  console.log(props);
   const [userAuth, setUserAuth] = useState({
     currentUser: null
   });
@@ -33,9 +32,13 @@ const App = props => {
           });
         });
 
+        console.log(props.currentUser);
+
         setUserAuth({
-          currentUser: null
+          currentUser: props.currentUser
         });
+
+        console.log(userAuth);
       }
     });
   }, [props]);
@@ -48,14 +51,25 @@ const App = props => {
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route path="/shop" component={ShopPage} />
-        <Route path="/signin" component={SignInAndSignUpPage} />
+        {/* <Route path="/signin" component={SignInAndSignUpPage} /> */}
+        <Route
+          exact
+          path="/signin"
+          render={() =>
+            props.currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />
+          }
+        />
       </Switch>
     </Fragment>
   );
 };
 
-// const mapDispatchToProps = dispatch => ({
-//   setCurrentUser: user => dispatch(setCurrentUser(user))
-// });
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+});
 
-export default connect(null, { setCurrentUser })(App);
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});
+
+export default connect(mapStateToProps, { setCurrentUser })(App);
