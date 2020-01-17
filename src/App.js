@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
@@ -8,13 +9,17 @@ import Header from "./Components/Header/Header";
 import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
 
 import { auth, createUserProfileDocument } from "./Firebase/Firebase.utils";
+import { connect } from "react-redux";
 
-const App = () => {
+import { setCurrentUser } from "./redux/actions/userActions";
+
+const App = props => {
+  console.log(props);
   const [userAuth, setUserAuth] = useState({
     currentUser: null
   });
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     // function inside the auth library inside firebase
     auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
@@ -22,27 +27,23 @@ const App = () => {
 
         // check if the database has updated with the new data
         userRef.onSnapshot(snapShot => {
-          setUserAuth({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data()
-            }
+          props.setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data()
           });
         });
-
-        console.log(userAuth);
 
         setUserAuth({
           currentUser: null
         });
       }
     });
-  }, []);
+  }, [props]);
 
   return (
     <Fragment>
       {/* shows no matter what */}
-      <Header currentUser={userAuth} />
+      <Header />
       {/* shows one of these components inside switch statement */}
       <Switch>
         <Route exact path="/" component={Homepage} />
@@ -53,4 +54,8 @@ const App = () => {
   );
 };
 
-export default App;
+// const mapDispatchToProps = dispatch => ({
+//   setCurrentUser: user => dispatch(setCurrentUser(user))
+// });
+
+export default connect(null, { setCurrentUser })(App);
