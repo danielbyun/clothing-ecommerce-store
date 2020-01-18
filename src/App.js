@@ -32,13 +32,9 @@ const App = props => {
           });
         });
 
-        console.log(props.currentUser);
-
         setUserAuth({
           currentUser: props.currentUser
         });
-
-        console.log(userAuth);
       }
     });
   }, [props]);
