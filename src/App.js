@@ -3,15 +3,18 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import Homepage from "./Pages/Homepage/Homepage";
-import ShopPage from "./Pages/Shop/Shop";
-import Header from "./Components/Header/Header";
-import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
-
 import { auth, createUserProfileDocument } from "./Firebase/Firebase.utils";
 import { connect } from "react-redux";
 
 import { setCurrentUser } from "./redux/actions/userActions";
+import { selectCurrentUser } from "./redux/selectors/useSelectors";
+import { createStructuredSelector } from "reselect";
+
+import Homepage from "./Pages/Homepage/Homepage";
+import ShopPage from "./Pages/Shop/Shop";
+import Header from "./Components/Header/Header";
+import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
+import Checkout from "./Pages/Checkout/Checkout";
 
 const App = props => {
   const [userAuth, setUserAuth] = useState({
@@ -47,7 +50,7 @@ const App = props => {
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route path="/shop" component={ShopPage} />
-        {/* <Route path="/signin" component={SignInAndSignUpPage} /> */}
+        <Route exact path="/checkout" component={Checkout} />
         <Route
           exact
           path="/signin"
@@ -60,12 +63,12 @@ const App = props => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
+// const mapDispatchToProps = dispatch => ({
+//   setCurrentUser: user => dispatch(setCurrentUser(user))
+// });
 
 export default connect(mapStateToProps, { setCurrentUser })(App);
