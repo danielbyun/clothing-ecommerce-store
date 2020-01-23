@@ -7,7 +7,7 @@ import { auth, createUserProfileDocument } from "./Firebase/Firebase.utils";
 import { connect } from "react-redux";
 
 import { setCurrentUser } from "./redux/actions/userActions";
-import { selectCurrentUser } from "./redux/selectors/useSelectors";
+import { selectCurrentUser } from "./redux/selectors/userSelectors";
 import { createStructuredSelector } from "reselect";
 
 import Homepage from "./Pages/Homepage/Homepage";
@@ -17,7 +17,7 @@ import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up
 import Checkout from "./Pages/Checkout/Checkout";
 
 const App = props => {
-  const [userAuth, setUserAuth] = useState({
+  const [setUserAuth] = useState({
     currentUser: null
   });
 

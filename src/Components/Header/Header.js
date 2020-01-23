@@ -7,12 +7,11 @@ import CartIcon from "../Cart-Icon/CartIcon";
 
 import { auth } from "../../Firebase/Firebase.utils";
 
-import _ from "lodash";
 import { connect } from "react-redux";
 import CartDropdown from "../Cart-Dropdown/CartDropdown";
 
 import { createStructuredSelector } from "reselect";
-import { selectCurrentUser } from "../../redux/selectors/useSelectors";
+import { selectCurrentUser } from "../../redux/selectors/userSelectors";
 import { selectCartHidden } from "../../redux/selectors/cartSelectors";
 
 const Header = ({ currentUser, hidden }) => {
