@@ -4,6 +4,11 @@ import FormInput from "../Form-Input/Form-Input";
 import CustomButton from "../Custom-Button/Custom-Button";
 
 import { auth, signInWithGoogle } from "../../Firebase/Firebase.utils";
+import {
+  SignInContainer,
+  SignInTitle,
+  ButtonsBarContainer
+} from "./SignInStyled";
 
 // functional component
 const SignIn = () => {
@@ -35,8 +40,8 @@ const SignIn = () => {
   };
 
   return (
-    <div className="sign-in">
-      <h2 className="title">I already have an account</h2>
+    <SignInContainer>
+      <SignInTitle>I already have an account</SignInTitle>
       <span>Sign in with your email and password.</span>
 
       <form onSubmit={handleSubmit}>
@@ -56,14 +61,14 @@ const SignIn = () => {
           label="password"
           required
         />
-        <div className="buttons">
+        <ButtonsBarContainer>
           <CustomButton type="submit">Sign In</CustomButton>
           <CustomButton onClick={signInWithGoogle} isGoogleSignin>
             Sign In With Google
           </CustomButton>
-        </div>
+        </ButtonsBarContainer>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 

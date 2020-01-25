@@ -7,13 +7,14 @@ import { connect } from "react-redux";
 import { toggleCartHidden } from "../../redux/actions/cartActions";
 import { selectCartItemsCount } from "../../redux/selectors/cartSelectors";
 import { createStructuredSelector } from "reselect";
+import { CartContainer, ItemCountContainer } from "./CartIconStyled";
 
 const CartIcon = ({ toggleCartHidden, itemCount }) => {
   return (
-    <div className="cart-icon" onClick={toggleCartHidden}>
-      <ShoppingIcon className="shopping-icon" />
-      <span className="item-count">{itemCount}</span>
-    </div>
+    <CartContainer onClick={toggleCartHidden}>
+      <ShoppingIcon />
+      <ItemCountContainer>{itemCount}</ItemCountContainer>
+    </CartContainer>
   );
 };
 

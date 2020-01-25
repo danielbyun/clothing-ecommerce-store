@@ -7,14 +7,15 @@ import { createStructuredSelector } from "reselect";
 
 import CollectionPreview from "../Collection-Preview/Collection";
 import "./CollectionsOverview.scss";
+import { CollectionsOverviewContainer } from "./CollectionsOverviewStyled";
 
 const CollectionsOverview = ({ collections }) => {
   return (
-    <div className="collections-overview">
+    <CollectionsOverviewContainer>
       {collections.map(({ id, ...otherCollectionProps }) => (
         <CollectionPreview key={id} {...otherCollectionProps} />
       ))}
-    </div>
+    </CollectionsOverviewContainer>
   );
 };
 

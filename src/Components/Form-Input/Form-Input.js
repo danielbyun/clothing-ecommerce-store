@@ -1,20 +1,25 @@
 import React from "react";
 import "./Form-Input.scss";
+import {
+  GroupContainer,
+  FormInputContainer,
+  FormInputLabel
+} from "./Form-Input-Styled";
 
 const FormInput = ({ handleChange, label, ...otherProps }) => {
   return (
-    <div className="group">
-      <input className="form-input" onChange={handleChange} {...otherProps} />
+    <GroupContainer>
+      <FormInputContainer onChange={handleChange} {...otherProps} />
       {/* trigger shrink animation whenever a user types anything in */}
       {label ? (
-        <label
+        <FormInputLabel
           className={`${otherProps.value.length} ? "shrink" : ""}
           form-input-label`}
         >
           {label}
-        </label>
+        </FormInputLabel>
       ) : null}
-    </div>
+    </GroupContainer>
   );
 };
 

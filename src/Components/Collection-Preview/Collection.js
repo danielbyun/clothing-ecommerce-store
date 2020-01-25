@@ -2,12 +2,17 @@ import React from "react";
 import "./Collection.scss";
 
 import CollectionItem from "../Collection-Item/CollectionItem";
+import {
+  CollectionPreviewContainer,
+  TitleContainer,
+  PreviewContainer
+} from "./CollectionStyled";
 
 const CollectionPreview = ({ title, items }) => {
   return (
-    <div className="collection-preview">
-      <h1 className="title">{title.toUpperCase()}</h1>
-      <div className="preview">
+    <CollectionPreviewContainer>
+      <TitleContainer>{title.toUpperCase()}</TitleContainer>
+      <PreviewContainer>
         {/* performance concern whenever this component has to re-render */}
         {items
           // only show 4 items
@@ -15,8 +20,8 @@ const CollectionPreview = ({ title, items }) => {
           .map(item => (
             <CollectionItem key={item.id} item={item} />
           ))}
-      </div>
-    </div>
+      </PreviewContainer>
+    </CollectionPreviewContainer>
   );
 };
 
