@@ -9,7 +9,11 @@ import logger from "redux-logger";
 import rootReducer from "./reducer/rootReducer";
 
 // middleware is an arrary
-const middlewares = [logger];
+const middlewares = [];
+
+if (process.env.NODE_ENV === "development") {
+  middlewares.push(logger);
+}
 
 // put rootReducer and get all the methods from the array
 // technically don't need to export
