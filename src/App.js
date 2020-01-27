@@ -3,7 +3,11 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import { auth, createUserProfileDocument } from "./Firebase/Firebase.utils";
+import {
+  auth,
+  createUserProfileDocument
+  // addCollectionAndDocuments
+} from "./Firebase/Firebase.utils";
 import { connect } from "react-redux";
 
 import { setCurrentUser } from "./redux/actions/userActions";
@@ -15,6 +19,7 @@ import ShopPage from "./Pages/Shop/Shop";
 import Header from "./Components/Header/Header";
 import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
 import Checkout from "./Pages/Checkout/Checkout";
+// import { selectCollectionsForPreview } from "./redux/selectors/shopSelectors";
 
 const App = props => {
   const [setUserAuth] = useState({
@@ -22,6 +27,14 @@ const App = props => {
   });
 
   useDeepCompareEffect(() => {
+    // // run this once to add some data into the firebase database
+    // const { collectionsArray } = props;
+    // // don't pass the full array
+    // addCollectionAndDocuments(
+    //   "collections",
+    //   collectionsArray.map(({ title, items }) => ({ title, items }))
+    // );
+
     // function inside the auth library inside firebase
     auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
@@ -65,6 +78,7 @@ const App = props => {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
+  // collectionsArray: selectCollectionsForPreview
 });
 
 // const mapDispatchToProps = dispatch => ({
