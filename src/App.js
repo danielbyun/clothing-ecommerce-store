@@ -35,6 +35,7 @@ const App = props => {
     //   collectionsArray.map(({ title, items }) => ({ title, items }))
     // );
 
+    // observable pattern
     // function inside the auth library inside firebase
     auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {

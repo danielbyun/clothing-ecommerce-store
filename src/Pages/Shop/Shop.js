@@ -1,36 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 
-import CollectionsOverview from "../../Components/Collections-Overview/CollectionsOverview";
-import Collection from "../Collection/Collection";
-import {
-  firestore,
-  convertCollectionsSnapshotToMap
-} from "../../Firebase/Firebase.utils";
 import { connect } from "react-redux";
-import { updateCollections } from "../../redux/actions/shopActions";
+import { fetchCollectionsStartAsync } from "../../redux/actions/shopActions";
 
-import WithSpinner from "../../Components/WithSpinner/WithSpinner";
-
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-const CollectionsPageWithSpinner = WithSpinner(Collection);
+import CollectionsOverviewContainer from "../../Components/Collections-Overview/CollectionsOverviewContainer";
+import CollectionsPageContainer from "../Collection/CollectionContainer.js";
 
 const Shop = props => {
-  const { match, updateCollections } = props;
-  const [loading, setLoading] = useState(true);
+  const { match, fetchCollectionsStartAsync } = props;
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // fetch from firestore
-    const collectionRef = firestore.collection("collections");
+    // const collectionRef = firestore.collection("collections");
 
-    collectionRef.onSnapshot(async snapshot => {
-      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-      updateCollections(collectionsMap);
+    // =============== promise pattern ===============
+    // collectionRef.get().then(snapshot => {
+    //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //   updateCollections(collectionsMap);
+    //   // this will be refactored inside reducer
+    //   setLoading(false);
+    // });
+    // ==================================================
 
-      // this will be refactored inside reducer
-      setLoading(false);
-    });
-  }, [updateCollections]);
+    // =============== observable pattern ===============
+    // collectionRef.onSnapshot(async snapshot => {
+    //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //   updateCollections(collectionsMap);
+    //   // this will be refactored inside reducer
+    //   setLoading(false);
+    // });
+    // ==================================================
+
+    // =============== fetch pattern ====================
+    // REST API base URL
+    // https://firestore.googleapis.com/v1/projects/YOUR_PROJECT_ID/databases/(default)/documents
+    // database ID: ecommerce-store-db-7e46f
+    // fetch(
+    //   `https://firestore.googleapis.com/v1/projects/ecommerce-store-db-7e46f/databases/(default)/documents`
+    // )
+    //   .then(resp => resp.json())
+    //   .then(collections => console.log(collections));
+    fetchCollectionsStartAsync();
+  }, [fetchCollectionsStartAsync]);
 
   return (
     <div className="shop-page">
@@ -38,18 +51,16 @@ const Shop = props => {
       <Route
         exact
         path={`${match.path}`}
-        render={props => (
-          <CollectionsOverviewWithSpinner isLoading={loading} {...props} />
-        )}
+        component={CollectionsOverviewContainer}
       />
       <Route
         path={`${match.path}/:collectionId`}
-        render={props => (
-          <CollectionsPageWithSpinner isLoading={loading} {...props} />
-        )}
+        component={CollectionsPageContainer}
       />
     </div>
   );
 };
 
-export default connect(null, { updateCollections })(Shop);
+export default connect(null, {
+  fetchCollectionsStartAsync
+})(Shop);

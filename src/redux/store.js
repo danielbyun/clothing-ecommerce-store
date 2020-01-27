@@ -6,10 +6,13 @@ import { persistStore } from "redux-persist";
 // redux logger (shows all the logs on the console)
 import logger from "redux-logger";
 
+// redux-thunk that lets redux fire functions
+import thunk from "redux-thunk";
+
 import rootReducer from "./reducer/rootReducer";
 
-// middleware is an arrary
-const middlewares = [];
+// middleware is an array
+const middlewares = [thunk];
 
 if (process.env.NODE_ENV === "development") {
   middlewares.push(logger);
