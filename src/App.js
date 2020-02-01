@@ -3,14 +3,8 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import {
-  auth,
-  createUserProfileDocument
-  // addCollectionAndDocuments
-} from "./Firebase/Firebase.utils";
 import { connect } from "react-redux";
 
-import { setCurrentUser } from "./redux/actions/userActions";
 import { selectCurrentUser } from "./redux/selectors/userSelectors";
 import { createStructuredSelector } from "reselect";
 
@@ -19,13 +13,9 @@ import ShopPage from "./Pages/Shop/Shop";
 import Header from "./Components/Header/Header";
 import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
 import Checkout from "./Pages/Checkout/Checkout";
-// import { selectCollectionsForPreview } from "./redux/selectors/shopSelectors";
+import { checkUserSession } from "./redux/actions/userActions";
 
 const App = props => {
-  const [setUserAuth] = useState({
-    currentUser: null
-  });
-
   useDeepCompareEffect(() => {
     // // run this once to add some data into the firebase database
     // const { collectionsArray } = props;
@@ -34,26 +24,26 @@ const App = props => {
     //   "collections",
     //   collectionsArray.map(({ title, items }) => ({ title, items }))
     // );
-
-    // observable pattern
+    // ========== OBSERVABLE PATTERN ==========
     // function inside the auth library inside firebase
-    auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    // auth.onAuthStateChanged(async userAuth => {
+    //   if (userAuth) {
+    //     const userRef = await createUserProfileDocument(userAuth);
+    //     // check if the database has updated with the new data
+    //     userRef.onSnapshot(snapShot => {
+    //       props.setCurrentUser({
+    //         id: snapShot.id,
+    //         ...snapShot.data()
+    //       });
+    //     });
+    //     setUserAuth({
+    //       currentUser: props.currentUser
+    //     });
+    //   }
+    // });
 
-        // check if the database has updated with the new data
-        userRef.onSnapshot(snapShot => {
-          props.setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-        });
-
-        setUserAuth({
-          currentUser: props.currentUser
-        });
-      }
-    });
+    const { checkUserSession } = props;
+    checkUserSession();
   }, [props]);
 
   return (
@@ -82,8 +72,8 @@ const mapStateToProps = createStructuredSelector({
   // collectionsArray: selectCollectionsForPreview
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   setCurrentUser: user => dispatch(setCurrentUser(user))
-// });
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+});
 
-export default connect(mapStateToProps, { setCurrentUser })(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

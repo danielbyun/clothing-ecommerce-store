@@ -3,18 +3,21 @@ import React, { useState } from "react";
 import FormInput from "../Form-Input/Form-Input";
 import CustomButton from "../Custom-Button/Custom-Button";
 
-import { auth, createUserProfileDocument } from "../../Firebase/Firebase.utils";
+// import { auth, createUserProfileDocument } from "../../Firebase/Firebase.utils";
 
 import "./SignUp.scss";
 import { SignUpContainer, SignUpTitle } from "./SignUpStyled";
+import { signUpStart } from "../../redux/actions/userActions";
+import { connect } from "react-redux";
 
-const SignUp = () => {
+const SignUp = props => {
   const [currentUser, setCurrentUser] = useState({
     displayName: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
+  const { signUpStart } = props;
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -25,23 +28,25 @@ const SignUp = () => {
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+    // try {
+    //   const { user } = await auth.createUserWithEmailAndPassword(
+    //     email,
+    //     password
+    //   );
 
-      await createUserProfileDocument(user, { displayName });
+    //   await createUserProfileDocument(user, { displayName });
 
-      setCurrentUser({
-        displayName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    //   setCurrentUser({
+    //     displayName: "",
+    //     email: "",
+    //     password: "",
+    //     confirmPassword: ""
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
+    signUpStart(displayName, email, password, confirmPassword);
   };
 
   const handleChange = e => {
@@ -96,4 +101,9 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+  signUpStart: (displayName, email, password, confirmPassword) =>
+    dispatch(signUpStart({ displayName, email, password, confirmPassword }))
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

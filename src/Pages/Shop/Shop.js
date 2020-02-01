@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { fetchCollectionsStartAsync } from "../../redux/actions/shopActions";
+import { fetchCollectionsStart } from "../../redux/actions/shopActions";
 
 import CollectionsOverviewContainer from "../../Components/Collections-Overview/CollectionsOverviewContainer";
 import CollectionsPageContainer from "../Collection/CollectionContainer.js";
 
 const Shop = props => {
-  const { match, fetchCollectionsStartAsync } = props;
+  const { match, fetchCollectionsStart } = props;
   // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Shop = props => {
     // ==================================================
 
     // =============== observable pattern ===============
-    // collectionRef.onSnapshot(async snapshot => {
+    // collectionRef.onSnapshot(asnapshot => {
     //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
     //   updateCollections(collectionsMap);
     //   // this will be refactored inside reducer
@@ -42,8 +42,8 @@ const Shop = props => {
     // )
     //   .then(resp => resp.json())
     //   .then(collections => console.log(collections));
-    fetchCollectionsStartAsync();
-  }, [fetchCollectionsStartAsync]);
+    fetchCollectionsStart();
+  }, [fetchCollectionsStart]);
 
   return (
     <div className="shop-page">
@@ -62,5 +62,5 @@ const Shop = props => {
 };
 
 export default connect(null, {
-  fetchCollectionsStartAsync
+  fetchCollectionsStart
 })(Shop);

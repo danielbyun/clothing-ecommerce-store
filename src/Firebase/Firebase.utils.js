@@ -27,7 +27,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!snapShot.exists) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-
     try {
       await userRef.set({
         displayName,
@@ -85,18 +84,28 @@ export const convertCollectionsSnapshotToMap = collections => {
 // initialize firebase
 firebase.initializeApp(config);
 
+export const getCurrentUser = () => {
+  // need promise for saga to work off of
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
+
 // exporting firebase util functions
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 // exporting provider from authentication library
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // prompt whenever we use google authentication
-provider.setCustomParameters({ prompt: "select_account" });
+googleProvider.setCustomParameters({ prompt: "select_account" });
 
 // sign in with google popup
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 // export the entire library just incase we want it
 export default firebase;
