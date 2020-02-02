@@ -19,7 +19,7 @@ const CollectionPreview = ({ title, items }) => {
       <PreviewContainer>
         {/* performance concern whenever this component has to re-render */}
         {items
-          // only show 4 items
+          // filter to only show 4 items
           .filter((item, idx) => idx < 4)
           .map(item => (
             <CollectionItem key={item.id} item={item} />
