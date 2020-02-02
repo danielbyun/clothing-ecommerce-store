@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Collection.scss";
 
 import CollectionItem from "../Collection-Item/CollectionItem";
@@ -9,6 +9,10 @@ import {
 } from "./CollectionStyled";
 
 const CollectionPreview = ({ title, items }) => {
+  useEffect(() => {
+    // componentWillUnmount (clean up function)
+    return () => {};
+  });
   return (
     <CollectionPreviewContainer>
       <TitleContainer>{title.toUpperCase()}</TitleContainer>

@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import useDeepCompareEffect from "use-deep-compare-effect";
+import React, { Fragment, useEffect } from "react";
+// import useDeepCompareEffect from "use-deep-compare-effect";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -16,35 +16,39 @@ import Checkout from "./Pages/Checkout/Checkout";
 import { checkUserSession } from "./redux/actions/userActions";
 
 const App = props => {
-  useDeepCompareEffect(() => {
-    // // run this once to add some data into the firebase database
-    // const { collectionsArray } = props;
-    // // don't pass the full array
-    // addCollectionAndDocuments(
-    //   "collections",
-    //   collectionsArray.map(({ title, items }) => ({ title, items }))
-    // );
-    // ========== OBSERVABLE PATTERN ==========
-    // function inside the auth library inside firebase
-    // auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-    //     // check if the database has updated with the new data
-    //     userRef.onSnapshot(snapShot => {
-    //       props.setCurrentUser({
-    //         id: snapShot.id,
-    //         ...snapShot.data()
-    //       });
-    //     });
-    //     setUserAuth({
-    //       currentUser: props.currentUser
-    //     });
-    //   }
-    // });
-
-    const { checkUserSession } = props;
+  const { checkUserSession } = props;
+  useEffect(() => {
     checkUserSession();
-  }, [props]);
+  }, [checkUserSession]);
+
+  // useDeepCompareEffect(() => {
+  // // run this once to add some data into the firebase database
+  // const { collectionsArray } = props;
+  // // don't pass the full array
+  // addCollectionAndDocuments(
+  //   "collections",
+  //   collectionsArray.map(({ title, items }) => ({ title, items }))
+  // );
+  // ========== OBSERVABLE PATTERN ==========
+  // function inside the auth library inside firebase
+  // auth.onAuthStateChanged(async userAuth => {
+  //   if (userAuth) {
+  //     const userRef = await createUserProfileDocument(userAuth);
+  //     // check if the database has updated with the new data
+  //     userRef.onSnapshot(snapShot => {
+  //       props.setCurrentUser({
+  //         id: snapShot.id,
+  //         ...snapShot.data()
+  //       });
+  //     });
+  //     setUserAuth({
+  //       currentUser: props.currentUser
+  //     });
+  //   }
+  // });
+
+  // checkUserSession();
+  //}, [props]);
 
   return (
     <Fragment>
