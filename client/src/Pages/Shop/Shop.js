@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { fetchCollectionsStart } from "../../redux/actions/shopActions";
 
-import CollectionsOverviewContainer from "../../Components/Collections-Overview/CollectionsOverviewContainer";
-import CollectionsPageContainer from "../Collection/CollectionContainer.js";
+import Spinner from "../../Components/Spinner/Spinner";
+const CollectionsOverviewContainer = lazy(() =>
+  import("../../Components/Collections-Overview/CollectionsOverviewContainer")
+);
+const CollectionsPageContainer = lazy(() =>
+  import("../Collection/CollectionContainer.js")
+);
 
 const Shop = props => {
   const { match, fetchCollectionsStart } = props;
@@ -48,15 +53,17 @@ const Shop = props => {
   return (
     <div className="shop-page">
       {/* should dynamically redirect using a reducer */}
-      <Route
-        exact
-        path={`${match.path}`}
-        component={CollectionsOverviewContainer}
-      />
-      <Route
-        path={`${match.path}/:collectionId`}
-        component={CollectionsPageContainer}
-      />
+      <Suspense fallback={<Spinner />}>
+        <Route
+          exact
+          path={`${match.path}`}
+          component={CollectionsOverviewContainer}
+        />
+        <Route
+          path={`${match.path}/:collectionId`}
+          component={CollectionsPageContainer}
+        />
+      </Suspense>
     </div>
   );
 };
