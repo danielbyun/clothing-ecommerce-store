@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 // import useDeepCompareEffect from "use-deep-compare-effect";
-import "./App.css";
+
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -14,6 +14,8 @@ import Header from "./Components/Header/Header";
 import SignInAndSignUpPage from "./Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up";
 import Checkout from "./Pages/Checkout/Checkout";
 import { checkUserSession } from "./redux/actions/userActions";
+
+import { GlobalStyle } from "./globalStyles";
 
 const App = props => {
   const { checkUserSession } = props;
@@ -52,6 +54,7 @@ const App = props => {
 
   return (
     <Fragment>
+      <GlobalStyle />
       {/* shows no matter what */}
       <Header />
       {/* shows one of these components inside switch statement */}

@@ -17,6 +17,21 @@ export const CollectionItemContainer = styled.div`
       display: flex;
     }
   }
+
+  @media screen and (max-width: 800px) {
+    width: 40vw;
+
+    &:hover {
+      .image {
+        /* "unset" acts like it was never set in the first place */
+        opacity: unset;
+      }
+      button {
+        opacity: unset;
+        display: flex;
+      }
+    }
+  }
 `;
 
 export const AddButton = styled(CustomButton)`
@@ -25,6 +40,13 @@ export const AddButton = styled(CustomButton)`
   position: absolute;
   top: 255px;
   display: none;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+    opacity: 0.9;
+    min-width: unset;
+    padding: 0 10px;
+  }
 `;
 
 export const BackgroundImage = styled.div`
@@ -41,7 +63,7 @@ export const CollectionFooterContainer = styled.div`
   height: 5%;
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  font-size: 1 rem;
 `;
 
 export const NameContainer = styled.span`
