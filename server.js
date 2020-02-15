@@ -5,6 +5,9 @@ const bodyParser = require("body-parser");
 // native module
 const path = require("path");
 
+// compression
+const compression = require("compression");
+
 // if we're in development or testing
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
@@ -14,6 +17,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); // this returns
 // instantiate a new express application
 const app = express();
 const port = process.env.PORT || 5000;
+
+// compressiong app
+app.use(compression());
 
 // make sure that any requests' body tags are processed and convert it to json
 app.use(bodyParser.json());
