@@ -8,6 +8,8 @@ const path = require("path");
 // compression
 const compression = require("compression");
 
+const enforce = require("express-sslify");
+
 // if we're in development or testing
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
@@ -20,6 +22,9 @@ const port = process.env.PORT || 5000;
 
 // compressiong app
 app.use(compression());
+
+// redirect HTTP to HTTPS
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // make sure that any requests' body tags are processed and convert it to json
 app.use(bodyParser.json());
@@ -48,6 +53,12 @@ app.listen(port, error => {
   console.log(`Server running on port: ${port}`);
 });
 
+// give them serviceworker when the server looks for serviceWorker.js
+app.get("/service-worker.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "..", "build", "service-worker.js"));
+});
+
+// payment post api
 app.post("/payment", (req, res) => {
   // values we get from stripe token
   const body = {
