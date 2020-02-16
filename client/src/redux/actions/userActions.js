@@ -59,5 +59,6 @@ export const signOutSuccess = () => ({
 });
 
 export const signOutFail = error => ({
-  type: SIGN_OUT_FAIL
+  type: SIGN_OUT_FAIL,
+  PAYLOAD: ERROR
 });

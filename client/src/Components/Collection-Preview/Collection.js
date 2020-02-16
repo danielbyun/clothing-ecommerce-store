@@ -7,6 +7,7 @@ import {
   TitleContainer,
   PreviewContainer
 } from "./CollectionStyled";
+import { withRouter } from "react-router-dom";
 
 const CollectionPreview = ({ title, items }) => {
   useEffect(() => {
@@ -15,7 +16,11 @@ const CollectionPreview = ({ title, items }) => {
   });
   return (
     <CollectionPreviewContainer>
-      <TitleContainer>{title.toUpperCase()}</TitleContainer>
+      <TitleContainer
+        onClick={() => history.push(`${match.path}/${routeName}`)}
+      >
+        {title.toUpperCase()}
+      </TitleContainer>{" "}
       <PreviewContainer>
         {/* performance concern whenever this component has to re-render */}
         {items
@@ -29,4 +34,4 @@ const CollectionPreview = ({ title, items }) => {
   );
 };
 
-export default CollectionPreview;
+export default withRouter(CollectionPreview);
