@@ -1,6 +1,16 @@
-import { all, call, takeLatest, put } from "redux-saga/effects";
+import { all, call, takeLatest, put, select } from "redux-saga/effects";
 import { clearCart } from "../actions/cartActions";
-import { SIGN_OUT_SUCCESS } from "../types";
+import { getUserCartRef } from "../../Firebase/Firebase.utils";
+import { selectCurrentUser } from "../../redux/selectors/userSelectors";
+import { selectCartItems } from "../../redux/selectors/cartSelectors";
+import { setCartFromFirebase } from "../actions/cartActions";
+import {
+  SIGN_OUT_SUCCESS,
+  SIGN_IN_SUCCESS,
+  ADD_ITEM,
+  REMOVE_ITEM,
+  CLEAR_ITEM_FROM_CART
+} from "../types";
 
 export function* clearCartOnSignOut() {
   yield put(clearCart());
@@ -32,21 +42,13 @@ export function* checkCartFromFirebase({ payload: user }) {
   yield put(setCartFromFirebase(cartSnapshot.data().cartItems));
 }
 
-export function* onSignOutSuccess() {
-  yield takeLatest(SIGN_OUT_SUCCESS, clearCartOnSignOut);
-}
-
 export function* onUserSignIn() {
   yield takeLatest(SIGN_IN_SUCCESS, checkCartFromFirebase);
 }
 
 export function* onCartChange() {
   yield takeLatest(
-    [
-      CartActionTypes.ADD_ITEM,
-      CartActionTypes.REMOVE_ITEM,
-      CartActionTypes.CLEAR_ITEM_FROM_CART
-    ],
+    [ADD_ITEM, REMOVE_ITEM, CLEAR_ITEM_FROM_CART],
     updateCartInFirebase
   );
 }

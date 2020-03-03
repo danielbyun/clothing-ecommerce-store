@@ -9,7 +9,7 @@ import {
 } from "./CollectionStyled";
 import { withRouter } from "react-router-dom";
 
-const CollectionPreview = ({ title, items }) => {
+const CollectionPreview = ({ title, items, history, match, routeName }) => {
   useEffect(() => {
     // componentWillUnmount (clean up function)
     return () => {};

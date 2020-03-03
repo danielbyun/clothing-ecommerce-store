@@ -3,7 +3,9 @@ import {
   ADD_ITEM,
   CLEAR_ITEM_FROM_CART,
   REMOVE_ITEM,
-  CLEAR_CART
+  CLEAR_CART,
+  SET_CART_FROM_FIREBASE,
+  UPDATE_CART_IN_FIREBASE
 } from "../types";
 
 // we're not returning any payload
@@ -32,10 +34,10 @@ export const clearCart = () => ({
 });
 
 export const updateCartInFirebase = () => ({
-  type: CartActionTypes.UPDATE_CART_IN_FIREBASE
+  type: UPDATE_CART_IN_FIREBASE
 });
 
 export const setCartFromFirebase = cartItems => ({
-  type: CartActionTypes.SET_CART_FROM_FIREBASE,
+  type: SET_CART_FROM_FIREBASE,
   payload: cartItems
 });
