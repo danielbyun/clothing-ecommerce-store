@@ -1,17 +1,17 @@
-import { takeLatest, put, call, all } from "redux-saga/effects";
+import {takeLatest, put, call, all} from "redux-saga/effects";
 import {
   GOOGLE_SIGN_IN_START,
   EMAIL_SIGN_IN_START,
   CHECK_USER_SESSION,
   SIGN_OUT_START,
   SIGN_UP_START,
-  SIGN_UP_SUCCESS
+  SIGN_UP_SUCCESS,
 } from "../types";
 import {
   auth,
   googleProvider,
   createUserProfileDocument,
-  getCurrentUser
+  getCurrentUser,
 } from "../../Firebase/Firebase.utils";
 import {
   signInSuccess,
@@ -19,7 +19,7 @@ import {
   signOutSuccess,
   signOutFail,
   signUpFail,
-  signUpSuccess
+  signUpSuccess,
 } from "../actions/userActions";
 
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
@@ -33,33 +33,33 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     const userSnapshot = yield userRef.get();
 
     // issue out success call
-    yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+    yield put(signInSuccess({id: userSnapshot.id, ...userSnapshot.data()}));
   } catch (error) {
     yield put(signInFail(error));
   }
 }
 
 export function* signUp({
-  payload: { displayName, email, password, confirmPassword }
+  payload: {displayName, email, password, confirmPassword},
 }) {
   try {
-    const { user } = yield auth.createUserWithEmailAndPassword(email, password);
+    const {user} = yield auth.createUserWithEmailAndPassword(email, password);
 
     // sign up
-    yield put(signUpSuccess({ user, additionalData: { displayName } }));
+    yield put(signUpSuccess({user, additionalData: {displayName}}));
   } catch (error) {
     yield put(signUpFail(error));
   }
 }
 
-export function* signInAfterSignup({ payload: { user, additionalData } }) {
+export function* signInAfterSignup({payload: {user, additionalData}}) {
   // sign in
   yield getSnapshotFromUserAuth(user, additionalData);
 }
 
-export function* signInWithEmail({ payload: { email, password } }) {
+export function* signInWithEmail({payload: {email, password}}) {
   try {
-    const { user } = yield auth.signInWithEmailAndPassword(email, password);
+    const {user} = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(signInFail(error));
@@ -70,7 +70,7 @@ export function* signInWithGoogle() {
   // API call
   try {
     // get user from google signin popup
-    const { user } = yield auth.signInWithPopup(googleProvider);
+    const {user} = yield auth.signInWithPopup(googleProvider);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(signInFail(error));
@@ -127,6 +127,6 @@ export function* userSagas() {
     call(isUserAuthenticated),
     call(onSignOutStart),
     call(onSignUpStart),
-    call(onSignUpSuccess)
+    call(onSignUpSuccess),
   ]);
 }

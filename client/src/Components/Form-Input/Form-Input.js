@@ -3,10 +3,10 @@ import "./Form-Input.scss";
 import {
   GroupContainer,
   FormInputContainer,
-  FormInputLabel
+  FormInputLabel,
 } from "./Form-Input-Styled";
 
-const FormInput = ({ handleChange, label, ...otherProps }) => {
+const FormInput = ({handleChange, label, ...otherProps}) => {
   return (
     <GroupContainer>
       <FormInputContainer onChange={handleChange} {...otherProps} />

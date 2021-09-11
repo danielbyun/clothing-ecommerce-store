@@ -1,26 +1,26 @@
 import React from "react";
 
 import "./CheckoutItem.scss";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {
   addItem,
   removeItem,
-  clearItemFromCart
+  clearItemFromCart,
 } from "../../redux/actions/cartActions";
 import {
   CheckoutItemContainer,
   ImageContainer,
   TextContainer,
   QuantityContainer,
-  RemoveButtonContainer
+  RemoveButtonContainer,
 } from "./CheckoutItemStyled";
 
-const CheckoutItem = ({ cartItem, addItem, removeItem, clearItemFromCart }) => {
-  const { name, imageUrl, price, quantity } = cartItem;
+const CheckoutItem = ({cartItem, addItem, removeItem, clearItemFromCart}) => {
+  const {name, imageUrl, price, quantity} = cartItem;
   return (
     <CheckoutItemContainer>
       <ImageContainer>
-        <img src={imageUrl} alt="Item" />
+        <img src={imageUrl} alt='Item' />
       </ImageContainer>
       <TextContainer>{name}</TextContainer>
       <QuantityContainer>
@@ -40,6 +40,6 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItemFromCart }) => {
 //   clearItem: item => dispatch(clearItemFromCart(item))
 // });
 
-export default connect(null, { addItem, removeItem, clearItemFromCart })(
+export default connect(null, {addItem, removeItem, clearItemFromCart})(
   CheckoutItem
 );

@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import {createSelector} from "reselect";
 
 // two types of selectors
 // 1: input selector that doesn't use create selector
@@ -6,17 +6,17 @@ import { createSelector } from "reselect";
 
 // input selector
 // function that gets the state and returns a slice of it (one layer deep usually)
-const selectCart = state => state.cart;
+const selectCart = (state) => state.cart;
 
 // uses create selector
 export const selectCartItems = createSelector(
   [selectCart],
-  cart => cart.cartItems
+  (cart) => cart.cartItems
 );
 
 export const selectCartItemsCount = createSelector(
   [selectCartItems],
-  cartItems =>
+  (cartItems) =>
     cartItems.reduce(
       (accmulatedQuantity, cartItem) => accmulatedQuantity + cartItem.quantity,
       0
@@ -25,10 +25,10 @@ export const selectCartItemsCount = createSelector(
 
 export const selectCartHidden = createSelector(
   [selectCart],
-  cart => cart.hidden
+  (cart) => cart.hidden
 );
 
-export const selectCartTotal = createSelector([selectCartItems], cartItems =>
+export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
   cartItems.reduce(
     (accmulatedQuantity, cartItem) =>
       accmulatedQuantity + cartItem.quantity * cartItem.price,

@@ -1,7 +1,7 @@
 const initialState = {
   loading: true,
   currentUser: null,
-  error: null
+  error: null,
 };
 
 // if state is UNDEFINED it'll fallback to initialState
@@ -13,20 +13,20 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.payload,
         loading: false,
-        error: null
+        error: null,
       };
     case "SIGN_IN_FAILURE":
     case "SIGN_OUT_FAILURE":
     case "SIGN_UP_FAILURE":
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
       };
     case "SIGN_OUT_SUCCESS":
       return {
         ...state,
         currentUser: null,
-        error: null
+        error: null,
       };
     default:
       return state;

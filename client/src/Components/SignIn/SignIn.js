@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "./SignIn.scss";
 import FormInput from "../Form-Input/Form-Input";
 import CustomButton from "../Custom-Button/Custom-Button";
@@ -7,26 +7,26 @@ import CustomButton from "../Custom-Button/Custom-Button";
 import {
   SignInContainer,
   SignInTitle,
-  ButtonsBarContainer
+  ButtonsBarContainer,
 } from "./SignInStyled";
 import {
   googleSignInStart,
-  emailSignInStart
+  emailSignInStart,
 } from "../../redux/actions/userActions";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 // functional component
-const SignIn = props => {
-  const { emailSignInStart, googleSignInStart } = props;
+const SignIn = (props) => {
+  const {emailSignInStart, googleSignInStart} = props;
   const [state, setState] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { email, password } = state;
+    const {email, password} = state;
 
     // try catch using redux
     // try {
@@ -43,10 +43,10 @@ const SignIn = props => {
     emailSignInStart(email, password);
   };
 
-  const handleChange = e => {
-    const { value, name } = e.target;
+  const handleChange = (e) => {
+    const {value, name} = e.target;
 
-    setState({ ...state, [name]: value });
+    setState({...state, [name]: value});
   };
 
   return (
@@ -56,25 +56,25 @@ const SignIn = props => {
 
       <form onSubmit={handleSubmit}>
         <FormInput
-          name="email"
-          type="email"
+          name='email'
+          type='email'
           handleChange={handleChange}
           value={state.email}
-          label="email"
+          label='email'
           required
         />
         <FormInput
-          name="password"
-          type="password"
+          name='password'
+          type='password'
           handleChange={handleChange}
           value={state.password}
-          label="password"
+          label='password'
           required
         />
         <ButtonsBarContainer>
-          <CustomButton type="submit">Sign In</CustomButton>
+          <CustomButton type='submit'>Sign In</CustomButton>
           <CustomButton
-            type="button"
+            type='button'
             onClick={googleSignInStart}
             isGoogleSignin
           >
@@ -86,10 +86,10 @@ const SignIn = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   googleSignInStart: () => dispatch(googleSignInStart()),
   emailSignInStart: (email, password) =>
-    dispatch(emailSignInStart({ email, password }))
+    dispatch(emailSignInStart({email, password})),
 });
 
 export default connect(null, mapDispatchToProps)(SignIn);

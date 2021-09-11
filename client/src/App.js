@@ -1,19 +1,19 @@
-import React, { Fragment, useEffect, lazy, Suspense } from "react";
+import React, {Fragment, useEffect, lazy, Suspense} from "react";
 // import useDeepCompareEffect from "use-deep-compare-effect";
 
-import { Route, Switch, Redirect } from "react-router-dom";
+import {Route, Switch, Redirect} from "react-router-dom";
 
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
-import { selectCurrentUser } from "./redux/selectors/userSelectors";
-import { createStructuredSelector } from "reselect";
+import {selectCurrentUser} from "./redux/selectors/userSelectors";
+import {createStructuredSelector} from "reselect";
 
 import Header from "./Components/Header/Header";
 import Spinner from "./Components/Spinner/Spinner";
 
-import { checkUserSession } from "./redux/actions/userActions";
+import {checkUserSession} from "./redux/actions/userActions";
 
-import { GlobalStyle } from "./globalStyles";
+import {GlobalStyle} from "./globalStyles";
 import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary";
 
 const HomePage = lazy(() => import("./Pages/HomePage/HomePage"));
@@ -23,8 +23,8 @@ const SignInAndSignUpPage = lazy(() =>
 );
 const CheckoutPage = lazy(() => import("./Pages/Checkout/Checkout"));
 
-const App = props => {
-  const { checkUserSession } = props;
+const App = (props) => {
+  const {checkUserSession} = props;
 
   useEffect(() => {
     checkUserSession();
@@ -68,15 +68,15 @@ const App = props => {
       <Switch>
         <ErrorBoundary>
           <Suspense fallback={<Spinner />}>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/shop" component={ShopPage} />
-            <Route exact path="/checkout" component={CheckoutPage} />
+            <Route exact path='/' component={HomePage} />
+            <Route path='/shop' component={ShopPage} />
+            <Route exact path='/checkout' component={CheckoutPage} />
             <Route
               exact
-              path="/signin"
+              path='/signin'
               render={() =>
                 props.currentUser ? (
-                  <Redirect to="/" />
+                  <Redirect to='/' />
                 ) : (
                   <SignInAndSignUpPage />
                 )
@@ -90,12 +90,12 @@ const App = props => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
   // collectionsArray: selectCollectionsForPreview
 });
 
-const mapDispatchToProps = dispatch => ({
-  checkUserSession: () => dispatch(checkUserSession())
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

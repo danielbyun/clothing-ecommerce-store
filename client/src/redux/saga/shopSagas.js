@@ -1,16 +1,16 @@
 // effects from sagas that let us do different things
 
 // listens to every action
-import { takeLatest, call, all, put } from "redux-saga/effects";
+import {takeLatest, call, all, put} from "redux-saga/effects";
 
-import { FETCH_COLLECTIONS_START } from "../types";
+import {FETCH_COLLECTIONS_START} from "../types";
 import {
   firestore,
-  convertCollectionsSnapshotToMap
+  convertCollectionsSnapshotToMap,
 } from "../../Firebase/Firebase.utils";
 import {
   fetchCollectionsSuccess,
-  fetchCollectionsFailure
+  fetchCollectionsFailure,
 } from "../actions/shopActions";
 
 // async code generator fuction

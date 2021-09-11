@@ -4,13 +4,13 @@ import {
   CLEAR_ITEM_FROM_CART,
   REMOVE_ITEM,
   CLEAR_CART,
-  SET_CART_FROM_FIREBASE
+  SET_CART_FROM_FIREBASE,
 } from "../types";
-import { addItemToCart, removeItemFromCart } from "../utils/cartUtils";
+import {addItemToCart, removeItemFromCart} from "../utils/cartUtils";
 
 const INITIAL_STATE = {
   hidden: true,
-  cartItems: []
+  cartItems: [],
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -18,35 +18,35 @@ const cartReducer = (state = INITIAL_STATE, action) => {
     case TOGGLE_CART_HIDDEN:
       return {
         ...state,
-        hidden: !state.hidden
+        hidden: !state.hidden,
       };
     case ADD_ITEM:
       return {
         ...state,
-        cartItems: addItemToCart(state.cartItems, action.payload)
+        cartItems: addItemToCart(state.cartItems, action.payload),
       };
     case CLEAR_ITEM_FROM_CART:
       return {
         ...state,
         // filter to delete from existing array
         cartItems: state.cartItems.filter(
-          cartItem => cartItem.id !== action.payload.id
-        )
+          (cartItem) => cartItem.id !== action.payload.id
+        ),
       };
     case REMOVE_ITEM:
       return {
         ...state,
-        cartItems: removeItemFromCart(state.cartItems, action.payload)
+        cartItems: removeItemFromCart(state.cartItems, action.payload),
       };
     case CLEAR_CART:
       return {
         ...state,
-        cartItems: []
+        cartItems: [],
       };
     case SET_CART_FROM_FIREBASE:
       return {
         ...state,
-        cartItems: action.payload
+        cartItems: action.payload,
       };
     default:
       return state;

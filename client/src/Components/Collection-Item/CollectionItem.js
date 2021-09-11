@@ -1,26 +1,26 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 import "./CollectionItem.scss";
 
-import { addItem } from "../../redux/actions/cartActions";
+import {addItem} from "../../redux/actions/cartActions";
 import {
   CollectionItemContainer,
   BackgroundImage,
   CollectionFooterContainer,
   AddButton,
   NameContainer,
-  PriceContainer
+  PriceContainer,
 } from "./CollectionItemStyled";
 
-const CollectionItem = ({ addItem, item }) => {
-  const { name, price, imageUrl } = item;
+const CollectionItem = ({addItem, item}) => {
+  const {name, price, imageUrl} = item;
 
   return (
     <CollectionItemContainer>
       <BackgroundImage
         style={{
-          backgroundImage: `url(${imageUrl})`
+          backgroundImage: `url(${imageUrl})`,
         }}
       />
 
@@ -35,4 +35,4 @@ const CollectionItem = ({ addItem, item }) => {
   );
 };
 
-export default connect(null, { addItem })(CollectionItem);
+export default connect(null, {addItem})(CollectionItem);

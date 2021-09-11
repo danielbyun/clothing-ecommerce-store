@@ -2,30 +2,30 @@
 import {
   FETCH_COLLECTIONS_START,
   FETCH_COLLECTIONS_SUCCESS,
-  FETCH_COLLECTIONS_FAILURE
+  FETCH_COLLECTIONS_FAILURE,
 } from "../types";
 import {
   firestore,
-  convertCollectionsSnapshotToMap
+  convertCollectionsSnapshotToMap,
 } from "../../Firebase/Firebase.utils";
 
 // no payload bc it only changes a boolean value
 export const fetchCollectionsStart = () => ({
-  type: FETCH_COLLECTIONS_START
+  type: FETCH_COLLECTIONS_START,
 });
 
-export const fetchCollectionsSuccess = collectionsMap => ({
+export const fetchCollectionsSuccess = (collectionsMap) => ({
   type: FETCH_COLLECTIONS_SUCCESS,
-  payload: collectionsMap
+  payload: collectionsMap,
 });
 
-export const fetchCollectionsFailure = errorMessage => ({
+export const fetchCollectionsFailure = (errorMessage) => ({
   type: FETCH_COLLECTIONS_FAILURE,
-  payload: errorMessage
+  payload: errorMessage,
 });
 
 export const fetchCollectionsStartAsync = () => {
-  return dispatch => {
+  return (dispatch) => {
     const collectionRef = firestore.collection("collections");
 
     // state to isFetching as true
@@ -34,11 +34,11 @@ export const fetchCollectionsStartAsync = () => {
     // async fetch
     collectionRef
       .get()
-      .then(snapshot => {
+      .then((snapshot) => {
         const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
         // dispatch the succcess call
         dispatch(fetchCollectionsSuccess(collectionsMap));
       })
-      .catch(error => dispatch(fetchCollectionsFailure(error.message)));
+      .catch((error) => dispatch(fetchCollectionsFailure(error.message)));
   };
 };

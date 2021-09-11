@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import "./Collection.scss";
 
 import CollectionItem from "../Collection-Item/CollectionItem";
 import {
   CollectionPreviewContainer,
   TitleContainer,
-  PreviewContainer
+  PreviewContainer,
 } from "./CollectionStyled";
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
-const CollectionPreview = ({ title, items, history, match, routeName }) => {
+const CollectionPreview = ({title, items, history, match, routeName}) => {
   useEffect(() => {
     // componentWillUnmount (clean up function)
     return () => {};
@@ -26,7 +26,7 @@ const CollectionPreview = ({ title, items, history, match, routeName }) => {
         {items
           // filter to only show 4 items
           .filter((item, idx) => idx < 4)
-          .map(item => (
+          .map((item) => (
             <CollectionItem key={item.id} item={item} />
           ))}
       </PreviewContainer>

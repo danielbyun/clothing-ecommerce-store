@@ -1,11 +1,11 @@
-import React, { useEffect, lazy, Suspense } from "react";
-import { Route } from "react-router-dom";
+import React, {useEffect, lazy, Suspense} from "react";
+import {Route} from "react-router-dom";
 
-import { connect } from "react-redux";
-import { fetchCollectionsStart } from "../../redux/actions/shopActions";
+import {connect} from "react-redux";
+import {fetchCollectionsStart} from "../../redux/actions/shopActions";
 
 import Spinner from "../../Components/Spinner/Spinner";
-import { ShopPageContainer } from "./ShopStyled.js";
+import {ShopPageContainer} from "./ShopStyled.js";
 
 const CollectionsOverviewContainer = lazy(() =>
   import("../../Components/Collections-Overview/CollectionsOverviewContainer")
@@ -14,8 +14,8 @@ const CollectionsPageContainer = lazy(() =>
   import("../Collection/CollectionContainer.js")
 );
 
-const Shop = props => {
-  const { match, fetchCollectionsStart } = props;
+const Shop = (props) => {
+  const {match, fetchCollectionsStart} = props;
   // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const Shop = props => {
   }, [fetchCollectionsStart]);
 
   return (
-    <div className="shop-page">
+    <div className='shop-page'>
       {/* should dynamically redirect using a reducer */}
       <Suspense fallback={<Spinner />}>
         <Route
@@ -71,5 +71,5 @@ const Shop = props => {
 };
 
 export default connect(null, {
-  fetchCollectionsStart
+  fetchCollectionsStart,
 })(Shop);

@@ -24,12 +24,12 @@ const port = process.env.PORT || 5000;
 app.use(compression());
 
 // redirect HTTP to HTTPS
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(enforce.HTTPS({trustProtoHeader: true}));
 
 // make sure that any requests' body tags are processed and convert it to json
 app.use(bodyParser.json());
 // url strings are getting in and we're passing out - do not contain spaces or symbols, etc
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // CORS!!!!
 app.use(cors());
@@ -41,14 +41,14 @@ if (process.env.NODE_ENV === "production") {
 
   // need to specify what route we want to serve it at
   // any route
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     // send static files (HTML, CSS, JS)
     res.sendFile(path.join(__dirname, "client/build", "index.html")); // give them index.html file which will contain all the frontend code
   });
 }
 
 // listen to the port specified above
-app.listen(port, error => {
+app.listen(port, (error) => {
   if (error) throw error;
   console.log(`Server running on port: ${port}`);
 });
@@ -65,7 +65,7 @@ app.post("/payment", (req, res) => {
     // token id
     source: req.body.token.id,
     amount: req.body.amount,
-    currency: "usd"
+    currency: "usd",
   };
 
   // making the charge
@@ -73,9 +73,9 @@ app.post("/payment", (req, res) => {
     // second argument is a callback that represents the req, res that we get back from the stripe API call
     // use the response object to tell the actual clientside whether the charge was successful or not
     if (stripeErr) {
-      res.status(500).send({ error: stripeErr });
+      res.status(500).send({error: stripeErr});
     } else {
-      res.status(200).send({ success: stripeRes });
+      res.status(200).send({success: stripeRes});
     }
   });
 });

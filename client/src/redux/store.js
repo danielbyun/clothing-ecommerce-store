@@ -1,7 +1,7 @@
-import { compose, createStore, applyMiddleware } from "redux";
+import {compose, createStore, applyMiddleware} from "redux";
 
 // cache the store
-import { persistStore } from "redux-persist";
+import {persistStore} from "redux-persist";
 
 // redux logger (shows all the logs on the console)
 import logger from "redux-logger";
@@ -36,4 +36,4 @@ sagaMiddleware.run(rootSagas);
 
 export const persistor = persistStore(store);
 
-export default { store, persistStore };
+export default {store, persistStore};

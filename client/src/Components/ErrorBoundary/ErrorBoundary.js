@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
   ErrorImageOverlay,
   ErrorImageContainer,
-  ErrorImageText
+  ErrorImageText,
 } from "./ErrorBoundaryStyled";
 
 class ErrorBoundary extends Component {
@@ -11,14 +11,14 @@ class ErrorBoundary extends Component {
 
     this.state = {
       // is there any error that occurred in the state
-      hasErrored: false
+      hasErrored: false,
     };
   }
 
   // lifecycles required for ErrorBoundaries
   static getDerivedStateFromError(error) {
     // process the error
-    return { hasErrored: true };
+    return {hasErrored: true};
   }
 
   // gives us the access to both the error and info related to the error
@@ -31,7 +31,7 @@ class ErrorBoundary extends Component {
     if (this.state.hasErrored) {
       return (
         <ErrorImageOverlay>
-          <ErrorImageContainer imageUrl="https://i.imgur.com/3suxlvm.png" />
+          <ErrorImageContainer imageUrl='https://i.imgur.com/3suxlvm.png' />
           <ErrorImageText>Oh no we tripped up!!</ErrorImageText>
         </ErrorImageOverlay>
       );

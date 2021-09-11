@@ -13,7 +13,7 @@ const config = {
   storageBucket: "ecommerce-store-db-7e46f.appspot.com",
   messagingSenderId: "555076438128",
   appId: "1:555076438128:web:d49dc96e53388d97c20cb5",
-  measurementId: "G-CMNZ6ZF41L"
+  measurementId: "G-CMNZ6ZF41L",
 };
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
@@ -25,14 +25,14 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   // create and store into database when it's a new user
   if (!snapShot.exists) {
-    const { displayName, email } = userAuth;
+    const {displayName, email} = userAuth;
     const createdAt = new Date();
     try {
       await userRef.set({
         displayName,
         email,
         createdAt,
-        ...additionalData
+        ...additionalData,
       });
     } catch (error) {
       console.error(`Error creating user`, error.message);
@@ -41,13 +41,13 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-export const getUserCartRef = async userId => {
+export const getUserCartRef = async (userId) => {
   const cartsRef = firestore.collection("carts").where("userId", "==", userId);
   const snapShot = await cartsRef.get();
 
   if (snapShot.empty) {
     const cartDocRef = firestore.collection("carts").doc();
-    await cartDocRef.set({ userId, cartItems: [] });
+    await cartDocRef.set({userId, cartItems: []});
     return cartDocRef;
   } else {
     return snapShot.docs[0].ref;
@@ -64,7 +64,7 @@ export const addCollectionAndDocuments = async (
   console.log(collectionRef);
 
   const batch = firestore.batch();
-  objectsToAdd.forEach(obj => {
+  objectsToAdd.forEach((obj) => {
     // loop through and batch the calls together
     // get the document at the empty string
     const newDocRef = collectionRef.doc();
@@ -75,15 +75,15 @@ export const addCollectionAndDocuments = async (
   return await batch.commit();
 };
 
-export const convertCollectionsSnapshotToMap = collections => {
-  const transformedCollection = collections.docs.map(doc => {
-    const { title, items } = doc.data();
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
+    const {title, items} = doc.data();
 
     return {
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,
       title,
-      items
+      items,
     };
   });
 
@@ -100,7 +100,7 @@ firebase.initializeApp(config);
 export const getCurrentUser = () => {
   // need promise for saga to work off of
   return new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
       unsubscribe();
       resolve(userAuth);
     }, reject);
@@ -115,7 +115,7 @@ export const firestore = firebase.firestore();
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // prompt whenever we use google authentication
-googleProvider.setCustomParameters({ prompt: "select_account" });
+googleProvider.setCustomParameters({prompt: "select_account"});
 
 // sign in with google popup
 export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
